@@ -1,3 +1,15 @@
 spring:
   application:
     name: north-admin
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/north?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml # 指定 Mapper XML 在 classpath 中的位置
+  configuration:
+    map-underscore-to-camel-case: true # 把 user_name 映射到 Java 属性 userName
+  type-aliases-package: com.north.system.domain # 指定实体类所在的包

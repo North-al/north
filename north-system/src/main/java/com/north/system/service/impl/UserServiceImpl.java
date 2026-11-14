@@ -1,29 +1,35 @@
 package com.north.system.service.impl;
 
 import com.north.system.domain.User;
+import com.north.system.dto.UserAddRequest;
+import com.north.system.mapper.UserMapper;
 import com.north.system.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
+
+    private final UserMapper userMapper;
+
     @Override
     public List<User> listUsers() {
-        User user = new User();
-        user.setUserId(1L);
-        user.setUserName("管理员");
-        user.setLoginName("admin");
-        user.setPassword("admin123");
-        user.setEmail("admin@example.com");
+        return userMapper.selectUserList();
+    }
 
-        User user1 = new User();
-        user1.setUserId(2L);
-        user1.setUserName("测试用户");
-        user1.setLoginName("haha");
-        user1.setPassword("test123");
-        user1.setEmail("test@example.com");
+    @Override
+    public int addUser(UserAddRequest userAddRequest) {
+        if (userAddRequest == null) {
+            throw new IllegalArgumentException("User add request cannot be null");
+        }
 
-        return List.of(user, user1);
+        if (userAddRequest.getLoginName() == null || userAddRequest.getLoginName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Login name cannot be null or empty");
+        }
+
+        return userMapper.insertUser(userAddRequest);
     }
 }

@@ -1,6 +1,8 @@
 package com.north.controller;
 
 
+import com.north.common.core.controller.BaseController;
+import com.north.common.core.page.TableDataInfo;
 import com.north.system.domain.User;
 import com.north.system.dto.UserAddRequest;
 import com.north.system.result.Result;
@@ -15,12 +17,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/system")
 @AllArgsConstructor
-public class UserController {
+public class UserController extends BaseController {
+
     private final UserService userService;
 
     @GetMapping("/users")
-    public List<User> listUsers() {
-        return userService.listUsers();
+    public TableDataInfo listUsers() {
+        startPage();
+        return getDataTable(userService.listUsers());
+
     }
 
 

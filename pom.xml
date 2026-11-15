@@ -22,6 +22,7 @@
     <modules>
         <module>north-admin</module>
         <module>north-system</module>
+        <module>north-common</module>
     </modules>
 
     <properties>
@@ -30,6 +31,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <mybatis-spring-boot.version>4.1.0</mybatis-spring-boot.version>
+        <pagehelper.boot.version>4.1.1</pagehelper.boot.version>
     </properties>
 
     <dependencyManagement>
@@ -40,11 +42,23 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.north</groupId>
+                <artifactId>north-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <!-- Spring Boot 父 POM 不管理这个版本，所以单独集中管理 -->
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis-spring-boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.boot.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

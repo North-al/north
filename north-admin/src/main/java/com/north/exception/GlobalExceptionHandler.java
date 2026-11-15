@@ -1,6 +1,8 @@
 package com.north.exception;
 
 import com.north.system.result.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +13,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Result<Void>> handleIllegalArgument(IllegalArgumentException exception) {
-        return ResponseEntity.badRequest().body(Result.error(exception.getMessage()));
+        return ResponseEntity.internalServerError().body(Result.error(exception.getMessage()));
     }
 
     /**
@@ -37,7 +41,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Result<Void>> handleUnexpected(Exception exception) {
-        // 实际项目应在这里记录 exception 的堆栈日志。
+        log.error("未预期的异常", exception);
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(Result.error("服务器内部错误"));

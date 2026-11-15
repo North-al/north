@@ -3,7 +3,9 @@ package com.north.controller;
 
 import com.north.system.domain.User;
 import com.north.system.dto.UserAddRequest;
+import com.north.system.result.Result;
 import com.north.system.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +25,8 @@ public class UserController {
 
 
     @PostMapping("/users")
-    public int post(@RequestBody UserAddRequest user) {
-        return userService.addUser(user);
+    public Result<Integer> post(@RequestBody @Valid UserAddRequest user) {
+        int i = userService.addUser(user);
+        return Result.success(i);
     }
 }

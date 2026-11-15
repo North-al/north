@@ -22,12 +22,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int addUser(UserAddRequest userAddRequest) {
-        if (userAddRequest == null) {
-            throw new IllegalArgumentException("User add request cannot be null");
+
+
+        if(userMapper.countByEmail(userAddRequest.getEmail()) > 0) {
+            throw new IllegalArgumentException("Email already exists");
         }
 
-        if (userAddRequest.getLoginName() == null || userAddRequest.getLoginName().trim().isEmpty()) {
-            throw new IllegalArgumentException("Login name cannot be null or empty");
+        if (userMapper.countByLoginName(userAddRequest.getLoginName()) > 0) {
+            throw new IllegalArgumentException("Login name already exists");
         }
 
         return userMapper.insertUser(userAddRequest);

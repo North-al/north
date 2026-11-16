@@ -86,4 +86,9 @@ public class UserServiceImpl implements UserService {
 
         return userMapper.changeUserStatus(userId, status);
     }
+
+    @Override
+    public SysUser selectUserById(Long userId) {
+        return userMapper.selectUserById(userId);
+    }
 }

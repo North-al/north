@@ -32,6 +32,8 @@
 
         <mybatis-spring-boot.version>4.1.0</mybatis-spring-boot.version>
         <pagehelper.boot.version>4.1.1</pagehelper.boot.version>
+        <knife4j.version>5.8.2</knife4j.version>
+        <swagger-annotations-jakarta.version>2.2.55</swagger-annotations-jakarta.version>
     </properties>
 
     <dependencyManagement>
@@ -59,6 +61,19 @@
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
                 <version>${pagehelper.boot.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.baizhukui</groupId>
+                <artifactId>knife4j-openapi3-boot4-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations-jakarta</artifactId>
+                <version>${swagger-annotations-jakarta.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

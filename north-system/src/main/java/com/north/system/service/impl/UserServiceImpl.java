@@ -73,4 +73,17 @@ public class UserServiceImpl implements UserService {
 
         return userMapper.deleteUserById(userId);
     }
+
+    @Override
+    public int changeUserStatus(Long userId, String status) {
+        if (userId == null || userId <= 0) {
+            throw new IllegalArgumentException("ID 不合法");
+        }
+
+        if (status == null || (!status.equals("0") && !status.equals("1"))) {
+            throw new IllegalArgumentException("状态不合法");
+        }
+
+        return userMapper.changeUserStatus(userId, status);
+    }
 }

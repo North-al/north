@@ -18,6 +18,9 @@
         UPDATE sys_user set del_flag = 1 WHERE user_id = #{userId}
 
     </update>
+    <update id="changeUserStatus">
+        UPDATE sys_user set status = #{status} WHERE user_id = #{userId} AND del_flag = 0
+    </update>
 
     <select id="selectUserList" resultType="SysUser">
         SELECT user_id, login_name, user_name, email, status

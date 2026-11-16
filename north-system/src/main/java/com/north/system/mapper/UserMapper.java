@@ -20,4 +20,6 @@ public interface UserMapper {
 
     int deleteUserById(Long userId);
 
+    int changeUserStatus(Long userId, String status);
+
 }

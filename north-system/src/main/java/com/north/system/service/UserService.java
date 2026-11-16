@@ -12,4 +12,6 @@ public interface UserService {
     int updateUser(SysUser user);
 
     int deleteUserById(Long userId);
+
+    int changeUserStatus(Long userId, String status);
 }

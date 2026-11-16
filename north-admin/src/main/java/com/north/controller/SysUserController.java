@@ -8,7 +8,6 @@ import com.north.system.result.Result;
 import com.north.system.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -35,12 +34,18 @@ public class SysUserController extends BaseController {
     @PutMapping("/users")
     public Result<Integer> updateUser(@RequestBody @Valid SysUser user) {
         int i = userService.updateUser(user);
-        return Result.success(i);
+        return Result.success(i, "更新用户信息成功");
     }
 
     @DeleteMapping("/users/{id}")
     public Result<Integer> delete(@PathVariable Long id) {
         int i = userService.deleteUserById(id);
         return Result.success(i);
+    }
+
+    @PostMapping("/users/change/status")
+    public Result<Integer> changeUserStatus(@RequestBody SysUser user) {
+        int i = userService.changeUserStatus(user.getUserId(), String.valueOf(user.getStatus()));
+        return Result.success(i, "修改用户状态成功");
     }
 }

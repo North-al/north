@@ -1,18 +1,23 @@
 package com.north.system.mapper;
 
 
-import com.north.system.domain.User;
-import com.north.system.dto.UserAddRequest;
-import org.apache.ibatis.annotations.Mapper;
+import com.north.system.domain.SysUser;
 
 import java.util.List;
 
 public interface UserMapper {
-    List<User> selectUserList();
+    List<SysUser> selectUserList();
 
-    int insertUser(UserAddRequest user);
+    int insertUser(SysUser user);
 
     int countByLoginName(String name);
 
     int countByEmail(String email);
+
+    SysUser getUserById(Long userId);
+
+    int updateUser(SysUser request);
+
+    int deleteUserById(Long userId);
+
 }

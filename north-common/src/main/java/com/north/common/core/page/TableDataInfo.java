@@ -14,7 +14,7 @@ public class TableDataInfo implements Serializable {
     private long total;
 
     /** 当前页数据 */
-    private List<?> rows;
+    private List<?> data;
 
     /** 表格接口状态码 */
     private int code;

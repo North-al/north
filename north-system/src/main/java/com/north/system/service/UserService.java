@@ -1,12 +1,15 @@
 package com.north.system.service;
 
-import com.north.system.domain.User;
-import com.north.system.dto.UserAddRequest;
+import com.north.system.domain.SysUser;
 
 import java.util.List;
 
 public interface UserService {
-    List<User> listUsers();
+    List<SysUser> listUsers();
 
-    int addUser(UserAddRequest userAddRequest);
+    int addUser(SysUser userAddRequest);
+
+    int updateUser(SysUser user);
+
+    int deleteUserById(Long userId);
 }

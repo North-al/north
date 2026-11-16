@@ -21,7 +21,8 @@ public final class PageUtils {
     public static TableDataInfo getDataTable(List<?> list) {
         TableDataInfo result = new TableDataInfo();
         result.setCode(200);
-        result.setRows(list);
+        result.setData(list);
+        result.setMessage("查询成功");
         result.setTotal(new PageInfo<>(list).getTotal());
         return result;
     }

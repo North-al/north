@@ -8,15 +8,37 @@
         INSERT INTO sys_user (login_name, user_name, email, status)
         VALUES (#{loginName}, #{userName}, #{email}, #{status})
     </insert>
-    <select id="selectUserList" resultType="User">
+
+    <update id="updateUser">
+        UPDATE sys_user set login_name = #{loginName}, user_name = #{userName}, email = #{email}, status = #{status}
+        WHERE user_id = #{userId} AND del_flag = 0
+    </update>
+
+    <update id="deleteUserById">
+        UPDATE sys_user set del_flag = 1 WHERE user_id = #{userId}
+
+    </update>
+
+    <select id="selectUserList" resultType="SysUser">
         SELECT user_id, login_name, user_name, email, status
         FROM sys_user
+        WHERE del_flag = 0
         ORDER BY user_id
     </select>
+
     <select id="countByLoginName" resultType="int">
-        SELECT COUNT(1) FROM sys_user WHERE login_name = #{name}
+        SELECT COUNT(1) FROM sys_user WHERE login_name = #{name} AND del_flag = 0
     </select>
+
     <select id="countByEmail" resultType="int">
-        SELECT COUNT(1) FROM sys_user WHERE email = #{email}
+        SELECT COUNT(1) FROM sys_user WHERE email = #{email} AND del_flag = 0
     </select>
+
+    <select id="getUserById" resultType="SysUser">
+        SELECT user_id, login_name, user_name, email, status
+        FROM sys_user
+        WHERE user_id = #{userId}
+          AND del_flag = 0
+    </select>
+
 </mapper>

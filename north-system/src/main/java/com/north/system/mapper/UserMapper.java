@@ -23,4 +23,7 @@ public interface UserMapper {
     int changeUserStatus(Long userId, String status);
 
     SysUser selectUserById(Long userId);
+
+    SysUser getUserByLoginName(String loginName);
+
 }

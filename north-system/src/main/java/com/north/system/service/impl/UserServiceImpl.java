@@ -4,6 +4,7 @@ import com.north.system.domain.SysUser;
 import com.north.system.mapper.UserMapper;
 import com.north.system.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<SysUser> listUsers() {
@@ -30,6 +32,9 @@ public class UserServiceImpl implements UserService {
         if (userMapper.countByLoginName(userAddRequest.getLoginName()) > 0) {
             throw new IllegalArgumentException("Login name already exists");
         }
+
+        // 对密码进行加密
+        userAddRequest.setPassword(passwordEncoder.encode(userAddRequest.getPassword()));
 
         return userMapper.insertUser(userAddRequest);
     }
@@ -61,6 +66,7 @@ public class UserServiceImpl implements UserService {
             }
         }
 
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return userMapper.updateUser(user);
     }

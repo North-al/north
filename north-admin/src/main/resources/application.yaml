@@ -1,4 +1,9 @@
 spring:
+  security:
+    user:
+      name: north
+      password: 123456
+
   application:
     name: north-admin
 

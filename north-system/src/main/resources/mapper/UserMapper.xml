@@ -5,8 +5,8 @@
 
 <mapper namespace="com.north.system.mapper.UserMapper">
     <insert id="insertUser">
-        INSERT INTO sys_user (login_name, user_name, email, status)
-        VALUES (#{loginName}, #{userName}, #{email}, #{status})
+        INSERT INTO sys_user (login_name, user_name, email, status, password)
+        VALUES (#{loginName}, #{userName}, #{email}, #{status}, #{password})
     </insert>
 
     <update id="updateUser">
@@ -16,8 +16,8 @@
 
     <update id="deleteUserById">
         UPDATE sys_user set del_flag = 1 WHERE user_id = #{userId}
-
     </update>
+
     <update id="changeUserStatus">
         UPDATE sys_user set status = #{status} WHERE user_id = #{userId} AND del_flag = 0
     </update>
@@ -43,11 +43,21 @@
         WHERE user_id = #{userId}
           AND del_flag = 0
     </select>
+
     <select id="selectUserById" resultType="SysUser">
         SELECT user_id, login_name, user_name, email, status
         FROM sys_user
         WHERE user_id = #{userId}
           AND del_flag = 0
+    </select>
+
+
+    <select id="getUserByLoginName" resultType="com.north.system.domain.SysUser">
+        SELECT user_id, login_name, user_name, email, status, password
+        FROM sys_user
+        WHERE login_name = #{loginName}
+          AND del_flag = 0
+
     </select>
 
 </mapper>

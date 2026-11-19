@@ -22,7 +22,6 @@ public class AuthController {
 
     @PostMapping("/login")
     public Object login(@Valid @RequestBody LoginBody loginBody) {
-        log.info("用户 {} 密码 {}", loginBody.getLoginName(), loginBody.getPassword());
         String token = loginService.login(
                 loginBody.getLoginName(),
                 loginBody.getPassword()

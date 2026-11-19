@@ -1,11 +1,13 @@
 package com.north.exception;
 
+import com.north.common.exception.LoginException;
 import com.north.system.result.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -32,8 +34,14 @@ public class GlobalExceptionHandler {
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .orElse("请求参数不合法");
 
-
         return ResponseEntity.badRequest().body(Result.error(errMessage));
+    }
+
+    @ExceptionHandler(LoginException.class)
+    public ResponseEntity<Result<Void>> handleLoginException(LoginException exception) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(Result.error(exception.getMessage()));
     }
 
     /**

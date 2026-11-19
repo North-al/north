@@ -9,6 +9,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +22,7 @@ import java.io.IOException;
 
 @Component
 @AllArgsConstructor
+@Slf4j
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
@@ -36,7 +38,6 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             String token = getBearerToken(request);
 
             if (token != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
                 Claims claims = tokenService.parseToken(token);
                 String sessionId = claims.get("sid", String.class);
 
@@ -54,6 +55,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 }
             }
         } catch (Exception ignored) {
+            log.error("处理 JWT 认证时发生异常", ignored);
             // 无效、过期或已退出的 Token 将保持匿名状态。
             SecurityContextHolder.clearContext();
         }

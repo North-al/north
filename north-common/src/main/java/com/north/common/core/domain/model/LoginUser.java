@@ -1,14 +1,18 @@
 package com.north.common.core.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.jspecify.annotations.NullMarked;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -25,9 +29,8 @@ public class LoginUser implements UserDetails {
     private Long loginTime;
     private Long expireTime;
 
-    @ToString.Exclude
-    private Collection<? extends GrantedAuthority> authorities =
-            Collections.emptyList();
+    private List<String> permissions = new ArrayList<>();
+
 
     public LoginUser(
             Long userId,
@@ -39,14 +42,28 @@ public class LoginUser implements UserDetails {
         this.loginName = loginName;
         this.password = password;
         this.status = status;
-        this.authorities = authorities == null
-                ? Collections.emptyList()
-                : authorities;
+        setAuthorities(authorities);
     }
 
+    public void setAuthorities(
+            Collection<? extends GrantedAuthority> authorities) {
+        this.permissions = authorities == null
+                ? new ArrayList<>()
+                : authorities.stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(java.util.stream.Collectors.toCollection(ArrayList::new));
+    }
+
+    @JsonIgnore
     @Override
-    public @NullMarked Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (permissions == null || permissions.isEmpty()) {
+            return List.of();
+        }
+
+        return permissions.stream()
+                .map(SimpleGrantedAuthority::new)
+                .toList();
     }
 
     @Override

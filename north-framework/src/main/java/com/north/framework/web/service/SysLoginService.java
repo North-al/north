@@ -24,9 +24,13 @@ public class SysLoginService {
 
     public String login(String loginName, String password) {
         try {
+            log.info("尝试登录，用户名: {} 密码：{}", loginName, password);
+
             Authentication authenticate = authenticationManager.authenticate(
                     UsernamePasswordAuthenticationToken.unauthenticated(loginName, password)
             );
+
+            log.info("登录成功，认证信息: {}", authenticate);
 
             LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
             return tokenService.createToken(loginUser);

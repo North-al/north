@@ -1,5 +1,6 @@
 package com.north.exception;
 
+import com.north.common.exception.BusinessException;
 import com.north.common.exception.LoginException;
 import com.north.system.result.Result;
 import org.slf4j.Logger;
@@ -43,6 +44,14 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.UNAUTHORIZED)
                 .body(Result.error(exception.getMessage()));
     }
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<Result<Void>> handleBusinessException(BusinessException exception) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Result.error(exception.getMessage()));
+    }
+
 
     /**
      * 兜底处理未预期异常；不要把内部异常细节返回给客户端。

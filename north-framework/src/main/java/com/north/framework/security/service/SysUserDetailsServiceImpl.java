@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -33,10 +34,10 @@ public class SysUserDetailsServiceImpl implements UserDetailsService {
 
         return new LoginUser(
                 user.getUserId(),
-                user.getUserName(),
+                user.getLoginName(),
                 user.getStatus(),
                 user.getPassword(),
-                Collections.emptyList()
+                List.of()
         );
     }
 }

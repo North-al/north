@@ -11,6 +11,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import tools.jackson.databind.jsontype.PolymorphicTypeValidator;
 
+import java.util.ArrayList;
+
 @Configuration
 public class RedisConfig {
 
@@ -19,6 +21,7 @@ public class RedisConfig {
         PolymorphicTypeValidator typeValidator =
                 BasicPolymorphicTypeValidator.builder()
                         .allowIfSubType("com.north.")
+                        .allowIfSubType(ArrayList.class)
                         .build();
 
         GenericJacksonJsonRedisSerializer jsonSerializer =

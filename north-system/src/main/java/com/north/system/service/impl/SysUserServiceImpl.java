@@ -2,7 +2,7 @@ package com.north.system.service.impl;
 
 import com.north.system.domain.SysUser;
 import com.north.system.mapper.UserMapper;
-import com.north.system.service.UserService;
+import com.north.system.service.SysUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class UserServiceImpl implements UserService {
+public class SysUserServiceImpl implements SysUserService {
 
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
@@ -96,5 +96,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public SysUser selectUserById(Long userId) {
         return userMapper.selectUserById(userId);
+    }
+
+    @Override
+    public SysUser selectUserByLoginName(String loginName) {
+        return userMapper.selectUserByLoginName(loginName);
+    }
+
+    @Override
+    public SysUser selectUserByUsername(String username) {
+        return userMapper.selectUserByUsername(username);
     }
 }

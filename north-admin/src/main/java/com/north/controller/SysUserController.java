@@ -5,7 +5,7 @@ import com.north.common.core.controller.BaseController;
 import com.north.common.core.page.TableDataInfo;
 import com.north.system.domain.SysUser;
 import com.north.system.result.Result;
-import com.north.system.service.UserService;
+import com.north.system.service.SysUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class SysUserController extends BaseController {
 
-    private final UserService userService;
+    private final SysUserService userService;
 
     @Operation(summary = "分页查询用户")
     @GetMapping("/user")

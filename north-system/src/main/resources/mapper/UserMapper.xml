@@ -59,5 +59,17 @@
           AND del_flag = 0
 
     </select>
+    <select id="selectUserByLoginName" resultType="SysUser">
+        SELECT user_id, login_name, user_name, email, status, password
+        FROM sys_user
+        WHERE login_name = #{loginName}
+          AND del_flag = 0
+    </select>
+    <select id="selectUserByUsername" resultType="com.north.system.domain.SysUser">
+        SELECT user_id, login_name, user_name, email, status, password
+        FROM sys_user
+        WHERE user_name = #{username}
+          AND del_flag = 0
+    </select>
 
 </mapper>

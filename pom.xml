@@ -23,6 +23,7 @@
         <module>north-admin</module>
         <module>north-system</module>
         <module>north-common</module>
+        <module>north-framework</module>
     </modules>
 
     <properties>
@@ -34,6 +35,7 @@
         <pagehelper.boot.version>4.1.1</pagehelper.boot.version>
         <knife4j.version>5.8.2</knife4j.version>
         <swagger-annotations-jakarta.version>2.2.55</swagger-annotations-jakarta.version>
+        <jwt.version>0.13.0</jwt.version>
     </properties>
 
     <dependencyManagement>
@@ -47,6 +49,12 @@
             <dependency>
                 <groupId>com.north</groupId>
                 <artifactId>north-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.north</groupId>
+                <artifactId>north-framework</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -74,6 +82,24 @@
                 <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-annotations-jakarta</artifactId>
                 <version>${swagger-annotations-jakarta.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>${jwt.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId>
+                <version>${jwt.version}</version>
+                <scope>runtime</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

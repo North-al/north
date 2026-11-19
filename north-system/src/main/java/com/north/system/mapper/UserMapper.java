@@ -26,4 +26,7 @@ public interface UserMapper {
 
     SysUser getUserByLoginName(String loginName);
 
+    SysUser selectUserByLoginName(String loginName);
+
+    SysUser selectUserByUsername(String username);
 }

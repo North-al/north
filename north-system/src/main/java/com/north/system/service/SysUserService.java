@@ -4,7 +4,7 @@ import com.north.system.domain.SysUser;
 
 import java.util.List;
 
-public interface UserService {
+public interface SysUserService {
     List<SysUser> listUsers();
 
     int addUser(SysUser userAddRequest);
@@ -16,4 +16,8 @@ public interface UserService {
     int changeUserStatus(Long userId, String status);
 
     SysUser selectUserById(Long userId);
+
+    SysUser selectUserByLoginName(String loginName);
+
+    SysUser selectUserByUsername(String username);
 }

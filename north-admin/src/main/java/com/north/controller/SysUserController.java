@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -21,6 +22,7 @@ public class SysUserController extends BaseController {
 
     private final SysUserService userService;
 
+    @PreAuthorize("hasAuthority('system:user:list')")
     @Operation(summary = "分页查询用户")
     @GetMapping("/user")
     public TableDataInfo listUsers() {
@@ -29,7 +31,7 @@ public class SysUserController extends BaseController {
 
     }
 
-
+    @PreAuthorize("hasAuthority('system:user:add')")
     @PostMapping("/user")
     @Operation(summary = "添加用户")
     public Result<Integer> addUser(@RequestBody @Valid SysUser user) {

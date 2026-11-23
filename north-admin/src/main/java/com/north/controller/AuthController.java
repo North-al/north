@@ -28,7 +28,6 @@ public class AuthController {
     @Operation(security = {})
     @PostMapping("/login")
     public Object login(@Valid @RequestBody LoginBody loginBody) {
-        log.info("登录请求: {}", loginBody);
         String token = loginService.login(
                 loginBody.getLoginName(),
                 loginBody.getPassword()
@@ -39,7 +38,6 @@ public class AuthController {
     @Operation(security = {})
     @PostMapping("/register")
     public Result<Void> register(@Valid @RequestBody RegisterBody registerBody) {
-        log.info("注册请求: {}", registerBody);
         String message = registerService.register(registerBody);
 
         if (message != null) {

@@ -20,4 +20,6 @@ public interface SysUserService {
     SysUser selectUserByLoginName(String loginName);
 
     SysUser selectUserByUsername(String username);
+
+    List<String> selectPermissionsByLoginName(String loginName);
 }

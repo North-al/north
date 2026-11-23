@@ -107,4 +107,9 @@ public class SysUserServiceImpl implements SysUserService {
     public SysUser selectUserByUsername(String username) {
         return userMapper.selectUserByUsername(username);
     }
+
+    @Override
+    public List<String> selectPermissionsByLoginName(String loginName) {
+        return userMapper.selectPermissionsByLoginName(loginName);
+    }
 }

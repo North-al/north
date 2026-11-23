@@ -45,7 +45,16 @@ springdoc:
   swagger-ui:
     enabled: true
 
+logging:
+  level:
+    root: INFO
+    com.north: DEBUG
+  file:
+    name: logs/north-admin.log
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
 north:
   jwt:
     secret: ${JWT_SECRET:1231231sdahdasjkhdajks1231231sdahdasjkhdajks1231231sdahdasjkhdajks1231231sdahdasjkhdajks}
-    expire-minutes: 30
+    expire-minutes: 600

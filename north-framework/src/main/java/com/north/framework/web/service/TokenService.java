@@ -74,4 +74,10 @@ public class TokenService {
                 .parseSignedClaims(token)
                 .getPayload();
     }
+
+    public void deleteToken(String token) {
+        Claims claims = parseToken(token);
+        String sessionId = claims.get("sid", String.class);
+        redisCache.deleteObject("north:login:" + sessionId);
+    }
 }

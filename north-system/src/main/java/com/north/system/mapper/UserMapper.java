@@ -29,4 +29,6 @@ public interface UserMapper {
     SysUser selectUserByLoginName(String loginName);
 
     SysUser selectUserByUsername(String username);
+
+    List<String> selectPermissionsByLoginName(String loginName);
 }

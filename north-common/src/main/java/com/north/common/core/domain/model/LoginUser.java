@@ -30,6 +30,7 @@ public class LoginUser implements UserDetails {
     private Long expireTime;
 
     private List<String> permissions = new ArrayList<>();
+    private List<String> roles = new ArrayList<>();
 
 
     public LoginUser(

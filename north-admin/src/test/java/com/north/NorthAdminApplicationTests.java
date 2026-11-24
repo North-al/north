@@ -1,5 +1,6 @@
 package com.north;
 
+import com.north.common.core.domain.model.LoginUser;
 import com.north.framework.security.service.SysUserDetailsServiceImpl;
 import com.north.system.domain.SysUser;
 import com.north.system.service.SysUserService;
@@ -73,6 +74,15 @@ class NorthAdminApplicationTests {
                 "UserDetails 返回的密码值与 SysUserService 查出的密码值不同");
         assertTrue(detailsPasswordMatches,
                 "UserDetails 返回的密码哈希不匹配 123456");
+    }
+
+    @Test
+    void userDetailsContainRoleKey() {
+        LoginUser loginUser =
+                (LoginUser) userDetailsService.loadUserByUsername("north");
+
+        assertTrue(loginUser.getRoles().contains("system_admin"));
+        assertTrue(loginUser.getPermissions().contains("system:user:list"));
     }
 
 }

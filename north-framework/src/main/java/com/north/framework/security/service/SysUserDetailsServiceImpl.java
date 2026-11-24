@@ -3,6 +3,7 @@ package com.north.framework.security.service;
 
 import com.north.common.core.domain.model.LoginUser;
 import com.north.system.domain.SysUser;
+import com.north.system.service.SysRoleService;
 import com.north.system.service.SysUserService;
 import lombok.AllArgsConstructor;
 import org.jspecify.annotations.NullMarked;
@@ -23,6 +24,8 @@ public class SysUserDetailsServiceImpl implements UserDetailsService {
 
     private final SysUserService sysUserService;
 
+    private final SysRoleService sysRoleService;
+
     @Override
     public @NullMarked UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         SysUser user = sysUserService.selectUserByLoginName(username);
@@ -35,17 +38,11 @@ public class SysUserDetailsServiceImpl implements UserDetailsService {
         }
 
         List<String> permissions = sysUserService.selectPermissionsByLoginName(username);
+        List<String> roles = sysRoleService.selectRoleKeysByUserId(user.getUserId());
+        List<SimpleGrantedAuthority> authorities = permissions.stream().map(SimpleGrantedAuthority::new).toList();
+        LoginUser loginUser = new LoginUser(user.getUserId(), user.getLoginName(), user.getStatus(), user.getPassword(), authorities);
+        loginUser.setRoles(roles);
 
-        List<SimpleGrantedAuthority> authorities = permissions.stream()
-                .map(SimpleGrantedAuthority::new)
-                .toList();
-
-        return new LoginUser(
-                user.getUserId(),
-                user.getLoginName(),
-                user.getStatus(),
-                user.getPassword(),
-                authorities
-        );
+        return loginUser;
     }
 }

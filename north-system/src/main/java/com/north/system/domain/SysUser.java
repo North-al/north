@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * 用户领域对象
  */
@@ -16,7 +19,9 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class SysUser {
+public class SysUser implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private Long userId;
 

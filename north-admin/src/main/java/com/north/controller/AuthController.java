@@ -6,7 +6,9 @@ import com.north.framework.web.domain.RegisterBody;
 import com.north.framework.web.service.SysLoginService;
 import com.north.framework.web.service.SysRegisterService;
 import com.north.framework.web.service.TokenService;
+import com.north.system.domain.SysUser;
 import com.north.system.result.Result;
+import com.north.system.service.SysUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -14,6 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -24,6 +29,7 @@ public class AuthController {
     private final SysLoginService loginService;
     private final TokenService tokenService;
     private final SysRegisterService registerService;
+    private final SysUserService sysUserService;
 
     @Operation(security = {})
     @PostMapping("/login")
@@ -58,6 +64,15 @@ public class AuthController {
     @GetMapping("/info")
     public Result<?> getInfo(
             @AuthenticationPrincipal LoginUser loginUser) {
-        return Result.success(loginUser);
+
+
+
+        SysUser user = sysUserService.selectUserById(loginUser.getUserId());
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("user", user);
+        data.put("roles", loginUser.getRoles());
+        data.put("permissions", loginUser.getPermissions());
+
+        return Result.success(data);
     }
 }

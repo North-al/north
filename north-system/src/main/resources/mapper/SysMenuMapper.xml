@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.north.system.mapper.SysMenuMapper">
+
+
+    <select id="selectMenuTreeByUserId" resultType="com.north.system.domain.SysMenu">
+        SELECT DISTINCT
+            m.menu_id,
+            m.parent_id,
+            m.menu_name,
+            m.menu_type,
+            m.path,
+            m.component,
+            m.perms,
+            m.icon,
+            m.sort_order,
+            m.visible,
+            m.status
+        FROM sys_menu m
+                 JOIN sys_role_menu rm ON rm.menu_id = m.menu_id
+                 JOIN sys_user_role ur ON ur.role_id = rm.role_id
+                 JOIN sys_role r ON r.role_id = ur.role_id
+                 JOIN sys_user u ON u.user_id = ur.user_id
+        WHERE ur.user_id = #{userId}
+          AND u.status = '0'
+          AND u.del_flag = 0
+          AND r.status = '0'
+          AND m.status = '0'
+          AND m.visible = '0'
+          AND m.menu_type IN ('M', 'C')
+        ORDER BY m.parent_id, m.sort_order, m.menu_id
+    </select>
+</mapper>

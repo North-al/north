@@ -6,9 +6,12 @@ import com.north.framework.web.domain.RegisterBody;
 import com.north.framework.web.service.SysLoginService;
 import com.north.framework.web.service.SysRegisterService;
 import com.north.framework.web.service.TokenService;
+import com.north.system.domain.SysMenu;
 import com.north.system.domain.SysUser;
 import com.north.system.result.Result;
+import com.north.system.service.SysMenuService;
 import com.north.system.service.SysUserService;
+import com.north.system.vo.RouterVo;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -18,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -30,14 +34,12 @@ public class AuthController {
     private final TokenService tokenService;
     private final SysRegisterService registerService;
     private final SysUserService sysUserService;
+    private final SysMenuService sysMenuService;
 
     @Operation(security = {})
     @PostMapping("/login")
     public Object login(@Valid @RequestBody LoginBody loginBody) {
-        String token = loginService.login(
-                loginBody.getLoginName(),
-                loginBody.getPassword()
-        );
+        String token = loginService.login(loginBody.getLoginName(), loginBody.getPassword());
         return Result.success(token);
     }
 
@@ -54,19 +56,14 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public Result<Void> logout(
-            @AuthenticationPrincipal LoginUser loginUser) {
+    public Result<Void> logout(@AuthenticationPrincipal LoginUser loginUser) {
         tokenService.deleteToken(loginUser.getToken());
         SecurityContextHolder.clearContext();
         return Result.success(null, "退出成功");
     }
 
     @GetMapping("/info")
-    public Result<?> getInfo(
-            @AuthenticationPrincipal LoginUser loginUser) {
-
-
-
+    public Result<?> getInfo(@AuthenticationPrincipal LoginUser loginUser) {
         SysUser user = sysUserService.selectUserById(loginUser.getUserId());
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("user", user);
@@ -74,5 +71,11 @@ public class AuthController {
         data.put("permissions", loginUser.getPermissions());
 
         return Result.success(data);
+    }
+
+    @GetMapping("/getRouters")
+    public Result<List<RouterVo>> getRouters(@AuthenticationPrincipal LoginUser loginUser) {
+        List<SysMenu> menus = sysMenuService.selectMenuTreeByUserId(loginUser.getUserId());
+        return Result.success(sysMenuService.buildMenus(menus));
     }
 }
